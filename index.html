@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+	<title>Lily Oglesby's Pixel Portfolio</title>
+
+	<!-- External font resources -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+		rel="stylesheet"
+	>
+
+	<!-- Application stylesheets -->
+	<link rel="stylesheet" href="./styles.css">
+	<link rel="stylesheet" href="./quickInfo.css">
+</head>
+
+<body>
+	<!--
+		Main game container:
+		All game screens, overlays, interface controls, and the canvas 
+	-->
+	<div id="gameContainer" class="game-container">
+
+		<!--
+			Startup map preview used during the opening zoom transition.
+			This image is decorative and so it uses an empty alt attribute.
+		-->
+		<img
+			id="startupMapPreview"
+			class="startup-map-preview"
+			src="./images/basemap.png"
+			alt=""
+		>
+
+		<!-- =========================================================
+			STARTUP FLOW
+			device selection, experience selection,
+			introduction, and initial game settings panels.
+		========================================================= -->
+		<div id="startupOverlay" class="startup-overlay">
+
+			<!-- Device selection -->
+			<section id="devicePanel" class="startup-panel">
+				<h1 class="startup-title">Choose Your Device</h1>
+
+				<p class="startup-copy">
+					Are you visiting on a laptop or a phone?
+				</p>
+
+				<div class="startup-buttons">
+					<button
+						id="laptopButton"
+						class="startup-button"
+						type="button"
+					>
+						Laptop
+					</button>
+
+					<button
+						id="phoneButton"
+						class="startup-button"
+						type="button"
+					>
+						Phone
+					</button>
+				</div>
+			</section>
+
+			<!-- Laptop experience selection -->
+			<section
+				id="laptopPanel"
+				class="startup-panel is-hidden"
+			>
+				<h1 class="startup-title">Choose an Experience</h1>
+
+				<p class="startup-copy">
+					Explore the interactive game or select Explore to read everything immediately.
+				</p>
+
+				<div class="startup-buttons">
+					<button
+						id="playGameButton"
+						class="startup-button"
+						type="button"
+					>
+						Play Game
+					</button>
+
+					<button
+						id="startupQuickInfoButton"
+						class="startup-button"
+						type="button"
+					>
+						Explore
+					</button>
+				</div>
+			</section>
+
+			<!-- Gameplay introduction and navigation instructions -->
+			<section
+				id="introPanel"
+				class="startup-panel is-hidden"
+			>
+				<h1 class="startup-title">Welcome!</h1>
+
+				<p class="startup-copy">
+					Explore the world with "wasd", arrow keys, or the joystick and enter different buildings by walking up to them to learn more about me. Walk over grass and rocks to battle.
+				</p>
+
+				<p class="startup-copy">
+					Signs label the different areas, and displays inside the buildings contain more information.
+				</p>
+
+				<div class="startup-buttons">
+					<button
+						id="continueButton"
+						class="startup-button"
+						type="button"
+					>
+						Continue
+					</button>
+				</div>
+			</section>
+
+			<!-- Initial game configuration -->
+			<section
+				id="settingsPanel"
+				class="startup-panel is-hidden"
+			>
+				<h1 class="startup-title">Game Settings</h1>
+
+				<!-- Enables or disables random battle encounters -->
+				<label class="setting-row">
+					<span>Battles</span>
+
+					<input
+						id="battlesToggle"
+						type="checkbox"
+						checked
+					>
+				</label>
+
+				<!-- Enables or disables background music -->
+				<label class="setting-row">
+					<span>Music</span>
+
+					<input
+						id="musicToggle"
+						type="checkbox"
+						checked
+					>
+				</label>
+
+				<!-- Controls the global music volume -->
+				<label class="volume-setting">
+					<span>
+						Music Volume:
+						<span id="volumeValue">25%</span>
+					</span>
+
+					<input
+						id="musicVolume"
+						type="range"
+						min="0"
+						max="100"
+						step="1"
+						value="25"
+					>
+				</label>
+
+				<div class="startup-buttons">
+					<button
+						id="startGameButton"
+						class="startup-button"
+						type="button"
+					>
+						Start Game
+					</button>
+				</div>
+			</section>
+		</div>
+
+		<!-- =========================================================
+			PERSISTENT IN-GAME CONTROLS
+			These controls become available after the game starts.
+		========================================================= -->
+
+		<!-- Opens the in-game settings dialog -->
+		<button
+			id="settingsButton"
+			class="settings-button is-hidden"
+			type="button"
+		>
+			Settings
+		</button>
+
+		<!-- Opens the portfolio's direct-navigation menu -->
+		<button
+			id="quickInfoButton"
+			class="quick-info-button is-hidden"
+			type="button"
+		>
+			Explore
+		</button>
+
+		<!-- =========================================================
+			IN-GAME SETTINGS DIALOG
+			Allows settings to be updated without restarting the game.
+		========================================================= -->
+		<div
+			id="inGameSettingsOverlay"
+			class="in-game-settings-overlay is-hidden"
+		>
+			<section class="in-game-settings-panel">
+				<h1 class="startup-title">Settings</h1>
+
+				<!-- In-game battle encounter setting -->
+				<label class="setting-row">
+					<span>Battles</span>
+
+					<input
+						id="inGameBattlesToggle"
+						type="checkbox"
+						checked
+					>
+				</label>
+
+				<!-- In-game music setting -->
+				<label class="setting-row">
+					<span>Music</span>
+
+					<input
+						id="inGameMusicToggle"
+						type="checkbox"
+						checked
+					>
+				</label>
+
+				<!-- In-game music volume control -->
+				<label class="volume-setting">
+					<span>
+						Music Volume:
+						<span id="inGameVolumeValue">25%</span>
+					</span>
+
+					<input
+						id="inGameMusicVolume"
+						type="range"
+						min="0"
+						max="100"
+						step="1"
+						value="25"
+					>
+				</label>
+
+				<div class="startup-buttons settings-close-buttons">
+					<button
+						id="closeSettingsButton"
+						class="startup-button"
+						type="button"
+					>
+						Back to Game
+					</button>
+				</div>
+			</section>
+		</div>
+
+		<!-- =========================================================
+			QUICK INFORMATION DIALOG
+			Provides direct access to portfolio content without requiring
+			the user to navigate through the game world.
+		========================================================= -->
+		<div
+			id="quickInfoOverlay"
+			class="quick-info-overlay is-hidden"
+		>
+			<section
+				class="quick-info-panel"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="quickInfoTitle"
+			>
+				<!-- Accessible dialog close control -->
+				<button
+					id="closeQuickInfoButton"
+					class="quick-info-close-button"
+					type="button"
+					aria-label="Close quick information menu"
+				>
+					×
+				</button>
+
+				<h1
+					id="quickInfoTitle"
+					class="quick-info-title"
+				>
+					Explore
+				</h1>
+
+				<p class="quick-info-copy">
+					Choose a section to read without walking to its location.
+				</p>
+
+				<!--
+					Portfolio navigation grid.
+
+					Buttons open information within the application, while
+					anchor elements open external documents or profiles.
+				-->
+				<div class="quick-info-grid">
+					<button
+						class="quick-info-option-button"
+						type="button"
+						data-information-id="personal-overview"
+					>
+						Background
+					</button>
+
+					<button
+						class="quick-info-option-button"
+						type="button"
+						data-information-id="work-overview"
+					>
+						Experience
+					</button>
+
+					<button
+						class="quick-info-option-button"
+						type="button"
+						data-information-id="volunteer-overview"
+					>
+						Outreach
+					</button>
+
+					<a
+						class="quick-info-profile-button"
+						href="./src/data/Resume.pdf"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Resume
+					</a>
+
+					<a
+						class="quick-info-profile-button"
+						href="https://github.com/tygurlile"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						GitHub
+					</a>
+
+					<a
+						class="quick-info-profile-button"
+						href="https://www.linkedin.com/in/lilyoglesby/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						LinkedIn
+					</a>
+				</div>
+			</section>
+		</div>
+
+		<!-- =========================================================
+			REUSABLE INFORMATION DIALOG
+			Displays portfolio content selected from signs, displays,
+			buildings, or the quick-information menu.
+		========================================================= -->
+		<div
+			id="informationOverlay"
+			class="information-overlay is-hidden"
+		>
+			<section
+				id="informationPanel"
+				class="information-panel"
+				role="dialog"
+				aria-modal="true"
+				aria-labelledby="informationTitle"
+			>
+				<!-- Accessible dialog close control -->
+				<button
+					id="closeInformationButton"
+					class="information-close-button"
+					type="button"
+					aria-label="Close information"
+				>
+					×
+				</button>
+
+				<!-- Small category or section label -->
+				<p
+					id="informationEyebrow"
+					class="information-eyebrow"
+				>
+					Information
+				</p>
+
+				<!-- Dynamically populated information heading -->
+				<h1
+					id="informationTitle"
+					class="information-title"
+				>
+					Information
+				</h1>
+
+				<!-- Dynamically populated information content -->
+				<div id="informationBody"></div>
+
+				<!-- Optional links associated with the displayed content -->
+				<div
+					id="informationLinks"
+					class="information-links is-empty"
+				></div>
+			</section>
+		</div>
+
+		<!--
+			Context-sensitive interaction prompt.
+
+			This element is displayed when the player is close enough to
+			interact with an entrance, sign, terminal, or other object.
+		-->
+		<div
+			id="interactionPrompt"
+			class="interaction-prompt is-hidden"
+			aria-live="polite"
+		>
+			<span id="interactionPromptText">[E / Space]</span>
+		</div>
+
+		<!-- Touch controls shown while exploring on phones and tablets -->
+		<div
+			id="mobileControls"
+			class="mobile-controls is-hidden"
+			aria-label="Touch game controls"
+		>
+			<div
+				id="virtualJoystick"
+				class="virtual-joystick"
+				role="group"
+				aria-label="Movement joystick"
+			>
+				<span class="joystick-arrow joystick-arrow-up" aria-hidden="true"></span>
+				<span class="joystick-arrow joystick-arrow-right" aria-hidden="true"></span>
+				<span class="joystick-arrow joystick-arrow-down" aria-hidden="true"></span>
+				<span class="joystick-arrow joystick-arrow-left" aria-hidden="true"></span>
+				<span id="joystickKnob" class="joystick-knob" aria-hidden="true"></span>
+			</div>
+
+			<button
+				id="mobileInteractButton"
+				class="mobile-interact-button"
+				type="button"
+				aria-label="Interact"
+			>
+				<span class="mobile-interact-letter">A</span>
+				<span class="mobile-interact-label">Interact</span>
+			</button>
+		</div>
+
+		<!--
+			Full-screen transition layer used when entering or leaving
+			battles and when switching between scenes.
+		-->
+		<div id="overlappingDiv" class="screen-transition"></div>
+
+		<!-- Primary rendering surface for the game world and battles -->
+		<canvas></canvas>
+
+		<!-- =========================================================
+			BATTLE INTERFACE
+			Contains health displays, battle choices, attack controls,
+			attack descriptions, and battle dialogue.
+		========================================================= -->
+		<div id="userInterface" class="battle-ui">
+
+			<!-- Enemy name, level, and health information -->
+			<section class="status-box enemy-status">
+				<div class="status-heading">
+					<div class="monster-title">
+						<h1 id="enemyName" class="monster-name">Enemy</h1>
+						<span id="enemyLevel" class="monster-level">Lv. 8</span>
+					</div>
+
+					<span id="enemyHealthText" class="health-text">
+						100/100 HP
+					</span>
+				</div>
+
+				<div class="health-bar-background">
+					<div
+						id="enemyHealthBar"
+						class="health-bar-fill"
+					></div>
+				</div>
+			</section>
+
+			<!-- Player name, level, and health information -->
+			<section class="status-box player-status">
+				<div class="status-heading">
+					<div class="monster-title">
+						<h1 id="playerName" class="monster-name">Hubble</h1>
+						<span id="playerLevel" class="monster-level">Lv. 6</span>
+					</div>
+
+					<span id="playerHealthText" class="health-text">
+						100/100 HP
+					</span>
+				</div>
+
+				<div class="health-bar-background">
+					<div
+						id="playerHealthBar"
+						class="health-bar-fill"
+					></div>
+				</div>
+			</section>
+
+			<!-- Initial battle decision menu -->
+			<section
+				id="battleChoiceMenu"
+				class="battle-menu battle-choice-menu"
+			>
+				<div class="battle-question-panel">
+					<h1 class="battle-question">
+						What will Hubble do?
+					</h1>
+				</div>
+
+				<div class="battle-choice-buttons">
+					<!-- Opens the available attack menu -->
+					<button
+						id="fightButton"
+						type="button"
+						class="battle-choice-button"
+					>
+						Fight
+					</button>
+
+					<!-- Attempts to leave the current battle -->
+					<button
+						id="runButton"
+						type="button"
+						class="battle-choice-button"
+					>
+						Run
+					</button>
+				</div>
+			</section>
+
+			<!--
+				Attack selection menu.
+
+				This menu replaces the initial battle choice menu after the
+				player selects Fight.
+			-->
+			<section
+				id="battleAttackMenu"
+				class="battle-menu battle-attack-menu is-hidden"
+			>
+				<!-- Displays battle messages and action results -->
+				<div id="dialogueBox" class="dialogue-box"></div>
+
+				<!-- Attack buttons are generated dynamically in JavaScript -->
+				<div id="attacksBox" class="attacks-box"></div>
+
+				<!-- Displays information about the highlighted attack -->
+				<div class="attack-description-panel">
+					<p
+						id="attackDescription"
+						class="attack-description"
+					>
+						Hover over an attack to see what it does.
+					</p>
+				</div>
+			</section>
+		</div>
+	</div>
+
+	<!-- Phone portrait mode notice; gameplay is designed for landscape -->
+	<div class="rotate-device-overlay" aria-live="polite">
+		<section class="rotate-device-panel">
+			<div class="rotate-device-icon" aria-hidden="true">↻</div>
+			<h1>Rotate Your Phone</h1>
+			<p>This game works best in landscape mode.</p>
+		</section>
+	</div>
+
+	<!-- Howler.js provides cross-browser audio playback and management -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+		integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+	></script>
+
+	<!-- GSAP provides sprite movement, transitions, and battle animations -->
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
+		integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+		crossorigin="anonymous"
+		referrerpolicy="no-referrer"
+	></script>
+
+	<!-- Core canvas references, dimensions, and application state -->
+	<script src="./src/core/canvas.js"></script>
+	<script src="./src/core/gameState.js"></script>
+
+	<!-- Reusable game entity classes -->
+	<script src="./src/classes/Sprite.js"></script>
+	<script src="./src/classes/DogFollower.js"></script>
+	<script src="./src/classes/Boundary.js"></script>
+	<script src="./src/classes/Monster.js"></script>
+
+	<!-- Static game data and content definitions -->
+	<script src="./src/data/attacks.js"></script>
+	<script src="./src/data/audio.js"></script>
+	<script src="./src/data/zones/collisions.js"></script>
+	<script src="./src/data/monsters.js"></script>
+	<script src="./src/data/informationParagraphs.js"></script>
+	<script src="./src/data/informationContent.js"></script>
+
+	<!-- Outdoor building entrance and sign interaction data -->
+	<script src="./src/data/zones/worldZones/enterPersonalBuilding.js"></script>
+	<script src="./src/data/zones/worldZones/enterWorkBuilding.js"></script>
+
+	<script src="./src/data/zones/worldZones/personalSign.js"></script>
+	<script src="./src/data/zones/worldZones/volunteerSign.js"></script>
+	<script src="./src/data/zones/worldZones/workSign.js"></script>
+
+	<!-- Personal building collision and exit-zone data -->
+	<script src="./src/data/zones/personalBuildingZones/personalBuildingCollision.js"></script>
+	<script src="./src/data/zones/personalBuildingZones/personalBuildingExit.js"></script>
+
+	<!-- Work building collision and exit-zone data -->
+	<script src="./src/data/zones/workBuildingZones/workBuildingCollision.js"></script>
+	<script src="./src/data/zones/workBuildingZones/workBuildingExit.js"></script>
+
+	<!-- Interior and exterior information interaction-zone data -->
+	<script src="./src/data/zones/informationZones/personalBuildingInteraction.js"></script>
+	<script src="./src/data/zones/informationZones/workBuildingInteraction.js"></script>
+	<script src="./src/data/zones/informationZones/volunteerBuildingsInteraction.js"></script>
+
+	<!--
+		These files combine the individual zone datasets into structures
+		used by the world and interior scene systems.
+	-->
+	<script src="./src/data/zones/battleZones.js"></script>
+	<script src="./src/data/zones/worldZones.js"></script>
+	<script src="./src/data/zones/interiorZones.js"></script>
+	<script src="./src/data/interiors.js"></script>
+
+	<!-- World input, collision detection, and movement systems -->
+	<script src="./src/world/input.js"></script>
+	<script src="./src/ui/mobileControls.js"></script>
+	<script src="./src/world/collision.js"></script>
+	<script src="./src/world/mapBuilder.js"></script>
+	<script src="./src/world/worldMovement.js"></script>
+
+	<!-- World interaction and information-zone systems -->
+	<script src="./src/world/interactions.js"></script>
+	<script src="./src/world/interactionPrompt.js"></script>
+	<script src="./src/world/informationZones.js"></script>
+
+	<!-- World, interior, and scene-transition controllers -->
+	<script src="./src/world/worldScene.js"></script>
+	<script src="./src/world/interiorScene.js"></script>
+	<script src="./src/world/sceneTransitions.js"></script>
+
+	<!-- Portfolio information and quick-navigation interface controllers -->
+	<script src="./src/ui/informationPopup.js"></script>
+	<script src="./src/ui/quickInfoMenu.js"></script>
+
+	<!-- Battle interface, animation, action, and transition systems -->
+	<script src="./src/battle/battleUI.js"></script>
+	<script src="./src/battle/battleAnimations.js"></script>
+	<script src="./src/battle/battleActions.js"></script>
+	<script src="./src/battle/battleScene.js"></script>
+	<script src="./src/battle/battleTransitions.js"></script>
+
+	<!-- Application entry point; loaded after all dependencies -->
+	<script src="./src/main.js"></script>
+</body>
+</html>

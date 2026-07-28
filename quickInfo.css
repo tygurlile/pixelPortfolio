@@ -1,0 +1,246 @@
+/* =====================================================
+   QUICK INFORMATION BUTTON
+===================================================== */
+
+.quick-info-button.is-hidden {
+	display: none;
+}
+
+.quick-info-button {
+	position: absolute;
+	top: 78px;
+	right: 18px;
+	z-index: 15;
+
+	width: 150px;
+	height: 48px;
+	padding: 12px;
+
+	border: 4px solid var(--ui-ink);
+	background: var(--ui-paper);
+	color: var(--ui-ink);
+
+	font-family: inherit;
+	font-size: 11px;
+	line-height: 1.5;
+
+	cursor: pointer;
+}
+
+.quick-info-button:hover,
+.quick-info-button:focus-visible {
+	background: var(--ui-paper-hover);
+}
+
+
+/* =====================================================
+   QUICK INFORMATION OVERLAY
+===================================================== */
+
+.quick-info-overlay.is-hidden {
+	display: none;
+}
+
+.quick-info-overlay {
+	position: absolute;
+	inset: 0;
+	z-index: 29;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 24px;
+	overflow-y: auto;
+
+	background: var(--ui-overlay);
+	color: var(--ui-ink);
+}
+
+
+/* =====================================================
+   QUICK INFORMATION PANEL
+===================================================== */
+
+.quick-info-panel {
+	position: relative;
+
+	width: 700px;
+	max-width: 100%;
+	max-height: calc(100% - 48px);
+
+	padding: 64px 34px 38px;
+
+	overflow-x: hidden;
+	overflow-y: auto;
+
+	border: 6px solid var(--ui-ink);
+	background: var(--ui-paper);
+	color: var(--ui-ink);
+
+	box-shadow: 10px 10px 0 var(--ui-shadow);
+
+	text-align: center;
+}
+
+
+/* =====================================================
+   QUICK INFORMATION CLOSE BUTTON
+===================================================== */
+
+.quick-info-close-button {
+	position: absolute;
+	top: 14px;
+	right: 14px;
+	z-index: 2;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 44px;
+	height: 44px;
+	padding: 0;
+
+	border: 4px solid var(--ui-ink);
+	background: var(--ui-paper);
+	color: var(--ui-ink);
+
+	font-family: inherit;
+	font-size: 20px;
+	line-height: 1;
+
+	cursor: pointer;
+}
+
+.quick-info-close-button:hover,
+.quick-info-close-button:focus-visible {
+	background: var(--ui-paper-hover);
+}
+
+
+/* =====================================================
+   QUICK INFORMATION TEXT
+===================================================== */
+
+.quick-info-title {
+	margin: 0 60px 22px;
+
+	color: var(--ui-ink);
+
+	font-size: 23px;
+	line-height: 1.5;
+}
+
+.quick-info-copy {
+	max-width: 560px;
+	margin: 0 auto 28px;
+
+	color: var(--ui-ink);
+
+	font-size: 11px;
+	line-height: 2;
+}
+
+
+/* =====================================================
+   QUICK INFORMATION OPTIONS
+===================================================== */
+
+.quick-info-grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 14px;
+}
+
+.quick-info-grid > button,
+.quick-info-grid > a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	min-height: 62px;
+	padding: 10px 12px;
+
+	border: 4px solid var(--ui-ink);
+	background: var(--ui-paper);
+	color: var(--ui-ink);
+
+	font-family: inherit;
+	font-size: 12px;
+	line-height: 1.6;
+	text-align: center;
+	text-decoration: none;
+
+	cursor: pointer;
+}
+
+.quick-info-grid > button:hover,
+.quick-info-grid > button:focus-visible,
+.quick-info-grid > a:hover,
+.quick-info-grid > a:focus-visible {
+	background: var(--ui-paper-hover);
+}
+
+.quick-info-option:hover,
+.quick-info-option:focus-visible {
+	background: var(--ui-paper-hover);
+}
+
+
+/* =====================================================
+   RESPONSIVE QUICK INFORMATION MENU
+===================================================== */
+
+@media (max-width: 700px) {
+	.quick-info-overlay {
+		padding: 14px;
+	}
+
+	.quick-info-panel {
+		max-height: calc(100% - 28px);
+		padding: 64px 22px 30px;
+	}
+
+	.quick-info-title {
+		font-size: 18px;
+	}
+
+	.quick-info-grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+
+/* force settings and explore to be the same sizes */
+#settingsButton,
+#quickInfoButton {
+	width: 150px;
+	min-width: 150px;
+	max-width: 150px;
+
+	height: 48px;
+	min-height: 48px;
+	max-height: 48px;
+
+	padding: 0 10px;
+	box-sizing: border-box;
+
+	font-size: 11px;
+	line-height: 1.2;
+	text-align: center;
+}
+
+/* phone-sized settings and explore targets. */
+@media (pointer: coarse) and (orientation: landscape) {
+	#settingsButton,
+	#quickInfoButton {
+		height: 58px;
+		min-height: 58px;
+		max-height: 58px;
+	}
+
+	.quick-info-panel {
+		-webkit-overflow-scrolling: touch;
+	}
+}
