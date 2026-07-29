@@ -38,6 +38,21 @@ const quickInfoState = {
 	viewingInformation: false
 }
 
+// begin loading images while the visitor moves through the startup menus
+const imagePreloadStartedAt = performance.now()
+
+let imagePreloadFailure = null
+let preloadedImageCount = 0
+
+const gameImagePreloadPromise =
+	preloadGameImages()
+		.then((imageCount) => {
+			preloadedImageCount = imageCount
+		})
+		.catch((error) => {
+			imagePreloadFailure = error
+		})
+
 const startupPanels = [
 	startupUI.devicePanel,
 	startupUI.laptopPanel,
@@ -389,13 +404,35 @@ if (
 }
 
 
-function startGame() {
+async function startGame() {
 	if (gameState.hasStarted) return
 
-	gameState.hasStarted = true
-	audioManager.unlockAudio()
-
 	startupUI.startGameButton.disabled = true
+	startupUI.startGameButton.textContent = 'Loading...'
+
+	// dont not begin the game until every required image is ready.
+	await gameImagePreloadPromise
+
+	if (imagePreloadFailure) {
+		console.error(
+			'The game could not start because an image failed to load:',
+			imagePreloadFailure
+		)
+
+		startupUI.startGameButton.textContent = 'Loading Failed'
+		return
+	}
+
+	const preloadSeconds = (
+		(performance.now() - imagePreloadStartedAt) / 1000
+	).toFixed(2)
+
+	console.log(`${preloadedImageCount} images loaded in ${preloadSeconds} seconds`)
+
+	gameState.hasStarted = true
+	gameState.audioUnlocked = true
+
+	startupUI.startGameButton.textContent = 'Start Game'
 
 	drawWorldFrame()
 	audioManager.playMapMusic()
