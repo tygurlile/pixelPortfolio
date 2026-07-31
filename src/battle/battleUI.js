@@ -24,13 +24,13 @@ let attackMenuUnlockTimer = null
 
 function lockAttackMenuBriefly() {
 	attackMenuAcceptsInput = false
-	elements.attackMenu.style.pointerEvents = 'none'
+	elements.attacksBox.style.pointerEvents = 'none'
 
 	window.clearTimeout(attackMenuUnlockTimer)
 
 	attackMenuUnlockTimer = window.setTimeout(() => {
 		attackMenuAcceptsInput = true
-		elements.attackMenu.style.pointerEvents = 'auto'
+		elements.attacksBox.style.pointerEvents = 'auto'
 	}, 200)
 }
 
@@ -162,7 +162,7 @@ const battleUI = {
 
 		window.clearTimeout(attackMenuUnlockTimer)
 		attackMenuAcceptsInput = false
-		elements.attackMenu.style.pointerEvents = 'none'
+		elements.attacksBox.style.pointerEvents = 'none'
 
 		elements.choiceMenu.classList.remove('is-hidden')
 		elements.attackMenu.classList.add('is-hidden')
@@ -349,20 +349,18 @@ const battleUI = {
 	},
 
 	// disable attack buttons while an attack or message is active.
-	// disable attack buttons while an attack or message is active.
 	setAttackButtonsDisabled(disabled) {
-		elements.attacksBox
-			.querySelectorAll('button')
-			.forEach((button) => {
-				button.disabled = disabled
-			})
+	elements.attacksBox
+		.querySelectorAll('button')
+		.forEach((button) => {
+			button.disabled = disabled
+		})
 
-		if (disabled) {
-			attackMenuAcceptsInput = false
-			elements.attackMenu.style.pointerEvents = 'none'
-		} else {
-			attackMenuAcceptsInput = true
-			elements.attackMenu.style.pointerEvents = 'auto'
-		}
+	if (disabled) {
+		attackMenuAcceptsInput = false
+		elements.attacksBox.style.pointerEvents = 'none'
+	} else {
+		attackMenuAcceptsInput = true
+		elements.attacksBox.style.pointerEvents = 'auto'
 	}
 }

@@ -206,9 +206,6 @@
 		font-size: 18px;
 	}
 
-	.quick-info-grid {
-		grid-template-columns: 1fr;
-	}
 }
 
 
