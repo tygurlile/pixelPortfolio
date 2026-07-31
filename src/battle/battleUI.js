@@ -399,6 +399,17 @@ const battleUI = {
 		} else {
 			attackMenuAcceptsInput = true
 			elements.attacksBox.style.pointerEvents = 'auto'
+
+			// reset the attack preview for the next turn.
+			previewedAttackId = null
+
+			elements.attacksBox
+				.querySelectorAll('button')
+				.forEach((button) => {
+					button.classList.remove('is-previewed')
+				})
+
+			elements.attackDescription.textContent = defaultAttackDescription
 		}
 	}
 }
