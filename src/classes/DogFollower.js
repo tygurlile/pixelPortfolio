@@ -111,35 +111,29 @@ class DogFollower extends Sprite {
 			this.frames.max = frameCount
 			this.frames.val = 0
 			this.frames.elapsed = 0
-			this.frames.lastUpdateAt = null
+			this.frames.lastUpdatedAt = null
 
 			const resize = () => {
-				const size =
-					this.getImageSize(
-						image,
-						frameCount
-					)
+				// ignore a late load from an imagie hube is no longer using
+				if (this.image !== image) return
 
-				this.width = size.width
-				this.height = size.height
+				const size = this.getImageSize(image, frameCount)
+
+				this.sourceWidth = size.width
+				this.sourceHeight = size.height
+
+				this.width = size.width * this.scale
+				this.height = size.height * this.scale
 			}
 
 			if (
-				image.complete &&
-				image.naturalWidth
+				image.complete &&image.naturalWidth
 			) {
 				resize()
 			} else {
-				image.addEventListener(
-					'load',
-					resize,
-					{
-						once: true
-					}
-				)
+				image.addEventListener('load', resize, {once: true})
 			}
 		}
-
 		this.animate = animate
 	}
 
