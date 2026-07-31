@@ -1,4 +1,3 @@
-
 // how one complete battle move works
 
 let battleDialogueContinueResolver = null
@@ -80,14 +79,29 @@ function applyStatusAttack({
 			)
 			return `It optimizes ${attacker.name}’s next damaging attack, increasing its damage by 50%!`
 
-		case 'force-repeat':
-			// The effect cannot work before the opponent has used a move.
+		case 'force-repeat': {
 			if (!recipient.lastAttack) {
 				return `It tries to trap ${recipient.name}, but there is no previous move to repeat!`
 			}
 
-			recipient.status.forcedAttack = recipient.lastAttack
-			return `It traps ${recipient.name} into repeating ${recipient.lastAttack.name} on the next turn!`
+			const repeatedAttack = recipient.lastAttack
+
+			// infinite loop cannot repeat an exhausted move.
+			if (!recipient.canUseAttack(repeatedAttack)) {
+				return `It tries to trap ${recipient.name}, but ${repeatedAttack.name} has no uses left!`
+			}
+
+			// reserve one use immediately for the forced repetition.
+			recipient.useAttack(repeatedAttack)
+			battleUI.updateAttackButton(
+				repeatedAttack,
+				recipient
+			)
+
+			recipient.status.forcedAttack = repeatedAttack
+
+			return `It traps ${recipient.name} into repeating ${repeatedAttack.name} on the next turn!`
+		}
 
 		case 'reduce-next-incoming-damage':
 			attacker.addNextIncomingDamageMultiplier(attack.multiplier)

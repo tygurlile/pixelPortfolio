@@ -934,8 +934,8 @@ async function playLightBeam({
 	const beamApexRatio = 0.27
 	const distanceFromApexToCenter = beam.height / 2 - beam.height * beamApexRatio
 	const beamCenter = {
-		x: mouth.x + directionX * distanceFromApexToCenter,
-		y: mouth.y + directionY * distanceFromApexToCenter
+		x: mouth.x + directionX * distanceFromApexToCenter, // - moves left
+		y: mouth.y + directionY * distanceFromApexToCenter + 5 // + moves down
 	}
 
 	beam.position.x = beamCenter.x - beam.width / 2
@@ -1058,9 +1058,10 @@ async function playAccretionDisk({
 			center: getSpriteCenter(attacker),
 			scale: 0.68,
 			duration: 850,
-			behindSprite: attacker,
 			rotateBy: Math.PI * 1.5
 		})
+
+	effect.isAccretionDiskForeground = true
 
 	await wait(390)
 	onHeal()

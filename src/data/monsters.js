@@ -31,8 +31,8 @@ const monsters = {
 
 	quasaur: {
 		position: {
-			x: 755,
-			y: 72
+			x: 720,
+			y: 30
 		},
 		image: {
 			src: './characters/quasaur.png'

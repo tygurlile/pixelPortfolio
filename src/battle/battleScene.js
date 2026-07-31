@@ -105,6 +105,9 @@ function animateBattle(timestamp) {
 	battleBackground.draw(context)
 
 	battle.renderedSprites.forEach((sprite) => {
+		// foreground effects are drawn in a separate pass below
+		if (sprite.drawInFront) return
+
 		const shouldBob =
 			sprite === battle.enemy &&
 			sprite.name === 'Algorythm' &&
@@ -121,6 +124,13 @@ function animateBattle(timestamp) {
 		sprite.position.y = restingY + bobOffset
 		sprite.draw(context)
 		sprite.position.y = restingY
+	})
+
+	// draw foreground effects over both battle sprites
+	battle.renderedSprites.forEach((sprite) => {
+		if (!sprite.drawInFront) return
+
+		sprite.draw(context)
 	})
 }
 
@@ -161,7 +171,7 @@ function handleRunChoice() {
 }
 
 
-async function handlePlayerAttack(attack, { forced = false } = {}) {
+async function handlePlayerAttack(attack, {forced = false, consumeUse = true} = {}) {
 	const battle = gameState.battle
 
 	// normal attacks begin on click selection
@@ -173,7 +183,7 @@ async function handlePlayerAttack(attack, { forced = false } = {}) {
 	if (!validPhase) return
 
 	// can't attack if available-use count has been exhausted.
-	if (!battle.player.canUseAttack(attack)) {
+	if (consumeUse && !battle.player.canUseAttack(attack)) {
 		battle.queue = []
 		battleUI.showDialogue(
 			`${battle.player.name} can’t use ${attack.name} anymore!`
@@ -186,8 +196,10 @@ async function handlePlayerAttack(attack, { forced = false } = {}) {
 	battle.phase = 'animating'
 	battleUI.setAttackButtonsDisabled(true)
 
-	battle.player.useAttack(attack)
-	battleUI.updateAttackButton(attack, battle.player)
+	if (consumeUse) {
+		battle.player.useAttack(attack)
+		battleUI.updateAttackButton(attack, battle.player)
+	}
 
 	await performAttack({
 		attacker: battle.player,
@@ -230,7 +242,19 @@ async function handleEnemyTurn() {
 	const battle = gameState.battle
 	battle.phase = 'animating'
 
-	const randomAttack = chooseWeightedAttack(battle.enemy.attacks)
+	let availableAttacks = battle.enemy.attacks
+
+	// algorythm cannot select optimize twice consecutively.
+	if (
+		battle.enemy.name === 'Algorythm' &&
+		battle.enemy.lastAttack?.id === 'optimize'
+	) {
+		availableAttacks = availableAttacks.filter(
+				(attack) => attack.id !== 'optimize'
+			)
+	}
+
+	const randomAttack = chooseWeightedAttack(availableAttacks)
 
 	await performAttack({
 		attacker: battle.enemy,
@@ -300,7 +324,7 @@ function beginPlayerTurn() {
 	battleUI.hideDialogue()
 
 	// check the move inventory before enabling the attack menu
-	if (!battle.player.hasUsableAttacks()) {
+	if (!forcedAttack && !battle.player.hasUsableAttacks()) {
 		handleEnergyFaint().catch((error) => {
 			console.error('Hubble energy faint failed:', error)
 		})
@@ -317,7 +341,10 @@ function beginPlayerTurn() {
 		)
 		queueAction(() => handlePlayerAttack(
 			forcedAttack,
-			{ forced: true }
+			{ 
+				forced: true,
+				consumeUse: false
+			}
 		))
 		battle.phase = 'awaiting-dialogue'
 		return
