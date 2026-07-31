@@ -19,6 +19,20 @@ const elements = {
 	playerName: document.querySelector('#playerName')
 }
 
+let attackMenuAcceptsInput = false
+let attackMenuUnlockTimer = null
+
+function lockAttackMenuBriefly() {
+	attackMenuAcceptsInput = false
+	elements.attackMenu.style.pointerEvents = 'none'
+
+	window.clearTimeout(attackMenuUnlockTimer)
+
+	attackMenuUnlockTimer = window.setTimeout(() => {
+		attackMenuAcceptsInput = true
+		elements.attackMenu.style.pointerEvents = 'auto'
+	}, 200)
+}
 
 const dialogueBox = elements.dialogueBox
 
@@ -28,6 +42,8 @@ const choiceCallbacks = {fight: null, run: null}
 
 // ignore the extra click that touchscreens sometimes generate
 let lastTouchChoiceTime = -Infinity
+
+
 
 function triggerBattleChoice(choiceName) {
 	const button = choiceName === 'fight'
@@ -130,6 +146,7 @@ const battleUI = {
 	},
 
 	showAttackMenu() {
+		lockAttackMenuBriefly()
 		elements.choiceMenu.classList.add('is-hidden')
 		elements.attackMenu.classList.remove('is-hidden')
 	},
@@ -142,6 +159,10 @@ const battleUI = {
 	// return the battle interface to its starting state.
 	reset() {
 		this.hideDialogue()
+
+		window.clearTimeout(attackMenuUnlockTimer)
+		attackMenuAcceptsInput = false
+		elements.attackMenu.style.pointerEvents = 'none'
 
 		elements.choiceMenu.classList.remove('is-hidden')
 		elements.attackMenu.classList.add('is-hidden')
@@ -292,11 +313,17 @@ const battleUI = {
 			// select attack and update its description.
 			button.addEventListener(
 				'click',
-				() => {
-					this.showAttackDescription(
-						attack,
-						attacker
-					)
+				(event) => {
+					event.preventDefault()
+					event.stopPropagation()
+
+					// ignore the leftover click from tapping fight on phone
+					if (!attackMenuAcceptsInput) {return}
+
+					// prevent another attack from being selected during this turn
+					attackMenuAcceptsInput = false
+
+					this.showAttackDescription(attack, attacker)
 					onAttackSelected(attack)
 				}
 			)
@@ -305,10 +332,7 @@ const battleUI = {
 			button.addEventListener(
 				'mouseenter',
 				() => {
-					this.showAttackDescription(
-						attack,
-						attacker
-					)
+					this.showAttackDescription(attack, attacker)
 				}
 			)
 
@@ -316,19 +340,15 @@ const battleUI = {
 			button.addEventListener(
 				'focus',
 				() => {
-					this.showAttackDescription(
-						attack,
-						attacker
-					)
+					this.showAttackDescription(attack, attacker)
 				}
 			)
-
 			elements.attacksBox.append(button)
-
 			this.updateAttackButton(attack, attacker)
 		})
 	},
 
+	// disable attack buttons while an attack or message is active.
 	// disable attack buttons while an attack or message is active.
 	setAttackButtonsDisabled(disabled) {
 		elements.attacksBox
@@ -336,5 +356,13 @@ const battleUI = {
 			.forEach((button) => {
 				button.disabled = disabled
 			})
+
+		if (disabled) {
+			attackMenuAcceptsInput = false
+			elements.attackMenu.style.pointerEvents = 'none'
+		} else {
+			attackMenuAcceptsInput = true
+			elements.attackMenu.style.pointerEvents = 'auto'
+		}
 	}
 }
