@@ -1209,6 +1209,12 @@ canvas {
 	color: var(--ui-ink);
 }
 
+.attacks-box button.is-previewed {
+	background: var(--ui-paper-hover);
+	outline: 4px solid var(--ui-accent);
+	outline-offset: -4px;
+}
+
 .attack-button-name {
 	font-size: 12px;
 	line-height: 1.2;

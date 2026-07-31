@@ -21,6 +21,7 @@ const elements = {
 
 let attackMenuAcceptsInput = false
 let attackMenuUnlockTimer = null
+let previewedAttackId = null
 
 function lockAttackMenuBriefly() {
 	attackMenuAcceptsInput = false
@@ -36,7 +37,7 @@ function lockAttackMenuBriefly() {
 
 const dialogueBox = elements.dialogueBox
 
-const defaultAttackDescription = 'Hover over an attack to see what it does.'
+const defaultAttackDescription = 'Hover to preview. On phone, tap once to preview and again to use.'
 
 const choiceCallbacks = {fight: null, run: null}
 
@@ -146,7 +147,17 @@ const battleUI = {
 	},
 
 	showAttackMenu() {
+		previewedAttackId = null
+
+		elements.attacksBox
+			.querySelectorAll('button')
+			.forEach((button) => {
+				button.classList.remove('is-previewed')
+			})
+
+		elements.attackDescription.textContent = defaultAttackDescription
 		lockAttackMenuBriefly()
+
 		elements.choiceMenu.classList.add('is-hidden')
 		elements.attackMenu.classList.remove('is-hidden')
 	},
@@ -162,6 +173,7 @@ const battleUI = {
 
 		window.clearTimeout(attackMenuUnlockTimer)
 		attackMenuAcceptsInput = false
+		previewedAttackId = null
 		elements.attacksBox.style.pointerEvents = 'none'
 
 		elements.choiceMenu.classList.remove('is-hidden')
@@ -310,20 +322,45 @@ const battleUI = {
 
 			button.append(attackName, attackUses)
 
-			// select attack and update its description.
+			// Preview attacks on touchscreens before selecting them.
 			button.addEventListener(
 				'click',
 				(event) => {
 					event.preventDefault()
 					event.stopPropagation()
 
-					// ignore the leftover click from tapping fight on phone
-					if (!attackMenuAcceptsInput) {return}
+					// Ignore the leftover click from tapping Fight on a phone.
+					if (!attackMenuAcceptsInput) return
 
-					// prevent another attack from being selected during this turn
-					attackMenuAcceptsInput = false
+					const usesTouchPreview = window.matchMedia('(hover: none)').matches
 
 					this.showAttackDescription(attack, attacker)
+
+					if (
+						usesTouchPreview && previewedAttackId !== attack.id
+					) {
+						previewedAttackId = attack.id
+
+						elements.attacksBox
+							.querySelectorAll('button')
+							.forEach((attackButton) => {
+								attackButton.classList.toggle(
+									'is-previewed',
+									attackButton === button
+								)
+							})
+
+						elements.attackDescription.textContent =
+							`${getDisplayedAttackDescription(attack, attacker
+							)} Tap again to use ${attack.name}.`
+
+						return
+					}
+
+					// prevents another attack from being selected during this turn.
+					attackMenuAcceptsInput = false
+					previewedAttackId = null
+
 					onAttackSelected(attack)
 				}
 			)
