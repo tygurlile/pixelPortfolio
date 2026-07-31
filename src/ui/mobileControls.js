@@ -181,11 +181,10 @@ function pressInteract(pointerEvent) {
 
 	touchControlState.interactPointerId = pointerEvent.pointerId
 
-	// continue tracking the press even if the pointer moves off button
+	// Continue tracking the press even if the pointer moves off the button.
 	mobileControlsUI.interactButton.setPointerCapture(pointerEvent.pointerId)
 
 	mobileControlsUI.interactButton.classList.add('is-pressed')
-	setActionInput('interact', true)
 }
 
 
@@ -199,8 +198,25 @@ function releaseInteract(pointerEvent) {
 	pointerEvent.preventDefault()
 
 	touchControlState.interactPointerId = null
-
 	mobileControlsUI.interactButton.classList.remove('is-pressed')
+
+	// register one complete interaction after the finger is released
+	setActionInput('interact', true)
+	setActionInput('interact', false)
+}
+
+function cancelInteract(pointerEvent) {
+	if (
+		pointerEvent.pointerId !== touchControlState.interactPointerId
+	) {
+		return
+	}
+
+	pointerEvent.preventDefault()
+
+	touchControlState.interactPointerId = null
+	mobileControlsUI.interactButton.classList.remove('is-pressed')
+
 	setActionInput('interact', false)
 }
 
@@ -214,10 +230,22 @@ mobileControlsUI.joystick.addEventListener('lostpointercapture', stopJoystick)
 
 
 // register pointer events for the mobile interaction button
-mobileControlsUI.interactButton.addEventListener('pointerdown',pressInteract)
+mobileControlsUI.interactButton.addEventListener('pointerdown', pressInteract)
+
 mobileControlsUI.interactButton.addEventListener('pointerup', releaseInteract)
-mobileControlsUI.interactButton.addEventListener('pointercancel', releaseInteract)
-mobileControlsUI.interactButton.addEventListener('lostpointercapture', releaseInteract)
+
+mobileControlsUI.interactButton.addEventListener('pointercancel', cancelInteract)
+
+mobileControlsUI.interactButton.addEventListener('lostpointercapture', cancelInteract)
+
+mobileControlsUI.interactButton.addEventListener(
+	'click',
+	(event) => {
+		// prevent a second synthetic phone click
+		event.preventDefault()
+		event.stopPropagation()
+	}
+)
 
 
 // prevent a long press from opening the browser context menu.
