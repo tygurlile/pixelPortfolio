@@ -373,11 +373,26 @@ const battleUI = {
 				}
 			)
 
-			// show the same preview when using a keyboard.
+			button.addEventListener(
+				'mouseleave',
+				() => {
+					elements.attackDescription.textContent = defaultAttackDescription
+				}
+			)
+
+			// show the same preview when using a keyboard
 			button.addEventListener(
 				'focus',
 				() => {
 					this.showAttackDescription(attack, attacker)
+				}
+			)
+
+			// return to the instructions when keyboard focus leaves.
+			button.addEventListener(
+				'blur',
+				() => {
+					elements.attackDescription.textContent = defaultAttackDescription
 				}
 			)
 			elements.attacksBox.append(button)
