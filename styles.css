@@ -277,6 +277,14 @@ canvas {
 	background: var(--ui-paper-hover);
 }
 
+#laptopPanel .startup-buttons {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#startupHowBuiltButton {
+	font-size: 11px;
+}
+
 #introPanel .startup-buttons,
 #settingsPanel .startup-buttons {
 	grid-template-columns: 1fr;

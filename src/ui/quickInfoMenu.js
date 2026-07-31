@@ -2,6 +2,7 @@
  const quickInfoUI = {
 	button: document.querySelector('#quickInfoButton'),
 	overlay: document.querySelector('#quickInfoOverlay'),
+	howBuiltButton: document.querySelector('#howBuiltButton'),
 	closeButton: document.querySelector('#closeQuickInfoButton'),
 	options: Array.from(document.querySelectorAll('[data-information-id]')
 	)
@@ -101,11 +102,21 @@ function isQuickInfoMenuOpen() {
 }
 
 function showQuickInfoButton() {
-	if (!quickInfoUI.button) {return}
-	quickInfoUI.button.classList.remove('is-hidden')
+	[
+		quickInfoUI.button,
+		quickInfoUI.howBuiltButton
+	].forEach((button) => {
+		if (!button) {return}
+		button.classList.remove('is-hidden')
+	})
 }
 
 function hideQuickInfoButton() {
-	if (!quickInfoUI.button) {return}
-	quickInfoUI.button.classList.add('is-hidden')
+	[
+		quickInfoUI.button,
+		quickInfoUI.howBuiltButton
+	].forEach((button) => {
+		if (!button) {return}
+		button.classList.add('is-hidden')
+	})
 }

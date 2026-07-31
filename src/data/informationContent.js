@@ -14,6 +14,10 @@ const {
 	pythonProgramming,
 	reading,
 	aiResearch,
+	websiteIdea,
+	websiteTools,
+	websiteFeatures,
+	websiteProcess,
 	website
 } = window.informationParagraphs
 
@@ -363,5 +367,55 @@ const informationContent = {
 		],
 
 		links: []
+	},
+
+
+	// -------------------------------------
+	// WEBSITE INFO
+	// -------------------------------------
+
+	'website-overview': {
+		eyebrow: 'Project Process',
+		title: 'How I Built This Website',
+
+		groups: [
+			{
+				title: 'Behind the Portfolio',
+				className: 'projects',
+
+				sections: [
+					{
+						heading: 'Why I Made It',
+						paragraphs: websiteIdea
+					},
+
+					{
+						heading: 'How It Works',
+						paragraphs: websiteTools,
+					},
+
+					{
+						heading: 'What I Added',
+						paragraphs: websiteFeatures
+					},
+
+					{
+						heading: 'Development Process',
+						paragraphs: websiteProcess
+					}
+				]
+			}
+		],
+
+		links: [
+			{
+				label: 'View the Source Code',
+				url: 'https://github.com/tygurlile/pixelPortfolio'
+			},
+			{
+				label: 'Read the Full README and Credits',
+				url: 'https://github.com/tygurlile/pixelPortfolio#readme'
+			}
+		]
 	}
 }

@@ -9,6 +9,7 @@ const startupUI = {
 	laptopButton: document.querySelector('#laptopButton'),
 	playGameButton: document.querySelector('#playGameButton'),
 	startupQuickInfoButton: document.querySelector('#startupQuickInfoButton'),
+	startupHowBuiltButton: document.querySelector('#startupHowBuiltButton'),
 	continueButton: document.querySelector('#continueButton'),
 	battlesToggle: document.querySelector('#battlesToggle'),
 	musicToggle: document.querySelector('#musicToggle'),
@@ -30,6 +31,7 @@ const inGameSettingsUI = {
 
 // displays the map as a background befoe the website starts
 const startupMapPreview = document.querySelector('#startupMapPreview')
+const howBuiltButton = document.querySelector('#howBuiltButton')
 
 // tracks when the quick info menu is opened
 const quickInfoState = {
@@ -193,6 +195,13 @@ initializeQuickInfoMenu({
 	onClose: resumeAfterQuickInfoMenu
 })
 
+howBuiltButton.addEventListener(
+	'click',
+	() => {
+		beginInformationInteraction('website-overview')
+	}
+)
+
 // =========================================================
 // STARTUP EVENT HANDLERS
 // =========================================================
@@ -221,15 +230,17 @@ startupUI.playGameButton.addEventListener(
 	'click',
 	() => {
 		audioManager.unlockAudio()
-		showStartupPanel(
-			startupUI.introPanel
-		)
+		showStartupPanel(startupUI.introPanel)
 	}
 )
 
-startupUI.startupQuickInfoButton.addEventListener(
+startupUI.startupQuickInfoButton.addEventListener('click',openStartupQuickInfo)
+
+startupUI.startupHowBuiltButton.addEventListener(
 	'click',
-	openStartupQuickInfo
+	() => {
+		openStartupInformation('website-overview')
+	}
 )
 
 startupUI.continueButton.addEventListener(
@@ -657,6 +668,44 @@ function endBattle(result) {
 // QUICK INFORMATION MENU
 // =========================================================
 
+function openStartupInformation(contentId) {
+	if (
+		gameState.information.active ||
+		quickInfoState.active
+	) {
+		return
+	}
+
+	startupMapPreview.style.display = 'block'
+	positionWholeMapPreview()
+
+	startupUI.overlay.style.display = 'none'
+
+	gameState.information.active = true
+	gameState.information.contentId = contentId
+	gameState.information.returnScene = 'startup'
+	gameState.currentScene = 'information'
+
+	clearExplorationInput()
+	hideInteractionPrompt()
+
+	inGameSettingsUI.button.classList.add('is-hidden')
+
+	hideQuickInfoButton()
+	audioManager.pauseAllMusic()
+
+	const popupOpened = openInformationPopup(contentId)
+
+	if (popupOpened) return
+
+	gameState.information.active = false
+	gameState.information.contentId = null
+	gameState.information.returnScene = null
+	gameState.currentScene = 'startup'
+
+	startupUI.overlay.style.display = 'flex'
+	showStartupPanel(startupUI.laptopPanel)
+}
 
 function openStartupQuickInfo() {
 	if (
@@ -840,14 +889,29 @@ function resumeAfterInformationPopup() {
 
 	// if the page is from quick info, reopen the quick info menu
 	if (
-		quickInfoState.active && quickInfoState.viewingInformation
+		quickInfoState.active &&
+		quickInfoState.viewingInformation
 	) {
 		quickInfoState.viewingInformation = false
 		gameState.currentScene = 'quick-info'
 		showQuickInfoMenu()
 		return
 	}
-	resumeExplorationScene(returnScene)
+
+	// return to the experience-selection screen when info was opened before gameplay began
+	if (returnScene === 'startup') {
+		gameState.currentScene = 'startup'
+
+		startupUI.overlay.style.display = 'flex'
+		startupMapPreview.style.display = 'block'
+
+		positionWholeMapPreview()
+		showStartupPanel(startupUI.laptopPanel)
+
+		return
+	}
+
+resumeExplorationScene(returnScene)
 }
 
 // used after info is read and battles are finished

@@ -164,6 +164,42 @@ window.informationParagraphs = {
 		their research experience effectively in statements of purpose and interviews.`
 	],
 
+	websiteIdea: [
+		`I wanted to create a portfolio that felt more personal and memorable
+		than a traditional scrolling website. Because my background combines
+		data science, astrophysics, teaching, and creative projects, I turned
+		the portfolio into a small explorable game where each location reveals
+		a different part of my experience.`
+	],
+
+	websiteTools: [
+		`The website is built with HTML, CSS, and JavaScript, with the game
+		world rendered using HTML Canvas. Tiled was used to organize the map and
+		collision areas, GSAP handles transitions and attack animations, and
+		Howler.js manages the music and sound effects.`
+	],
+
+	websiteFeatures: [
+		`The project began with the Pokémon JavaScript tutorial by Chris Courses
+		and grew into a much larger custom portfolio. I added the portfolio map
+		and interiors, Hubble as a companion and battle partner, phone controls,
+		information displays, audio settings, custom enemies and attacks, level
+		and move-use systems, and the direct Explore menu.`
+	],
+
+	websiteProcess: [
+		`The final project combines tutorial-based code, third-party libraries
+		and licensed asset packs, custom content and design decisions, and
+		AI-assisted development. I used AI to help generate, connect, reorganize,
+		and debug parts of the code. I directed the overall concept, selected and
+		adapted the assets, wrote and revised the portfolio content, and tested
+		the website across laptop and phone.`,
+
+		`The full README contains the detailed tutorial references, asset sources,
+		audio credits, licenses, and additional information about the development
+		process.`
+	],
+
 	website: [
 		`I created this Pokémon-inspired portfolio website as a personal project to present 
 		my background in a more memorable and interactive way than a traditional résumé or 

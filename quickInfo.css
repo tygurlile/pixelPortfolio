@@ -1,5 +1,5 @@
 /* =====================================================
-   QUICK INFORMATION BUTTON
+   QUICK INFORMATION BUTTONS
 ===================================================== */
 
 .quick-info-button.is-hidden {
@@ -25,6 +25,10 @@
 	line-height: 1.5;
 
 	cursor: pointer;
+}
+
+#howBuiltButton {
+	top: 138px;
 }
 
 .quick-info-button:hover,
@@ -205,13 +209,16 @@
 	.quick-info-title {
 		font-size: 18px;
 	}
-
 }
 
 
-/* force settings and explore to be the same sizes */
+/* =====================================================
+   MATCHING SETTINGS AND INFORMATION BUTTONS
+===================================================== */
+
 #settingsButton,
-#quickInfoButton {
+#quickInfoButton,
+#howBuiltButton {
 	width: 150px;
 	min-width: 150px;
 	max-width: 150px;
@@ -228,13 +235,22 @@
 	text-align: center;
 }
 
-/* phone-sized settings and explore targets. */
+
+/* =====================================================
+   PHONE-SIZED INFORMATION BUTTONS
+===================================================== */
+
 @media (pointer: coarse) and (orientation: landscape) {
 	#settingsButton,
-	#quickInfoButton {
+	#quickInfoButton,
+	#howBuiltButton {
 		height: 58px;
 		min-height: 58px;
 		max-height: 58px;
+	}
+
+	#howBuiltButton {
+		top: 148px;
 	}
 
 	.quick-info-panel {
