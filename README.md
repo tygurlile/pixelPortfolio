@@ -234,8 +234,8 @@ Some tilesheets had to be resized so everything would work on the same **48×48-
 
 ## Battle Background
 
-- **Artist:** Hayashi Draws
-- **Profile:** [Hayashi Draws on X](https://x.com/hayashidraws)
+- **Artist:** HayashiDraws
+- **Profile:** [HayashiDraws on X](https://x.com/hayashidraws)
 ___
 
 ## Buildings and Interiors
@@ -256,10 +256,10 @@ I used these assets to build the portfolio buildings and interior rooms. I creat
 
 ### Lily and Hubble
 
-All sprites of **Lily** and **Hubble** were drawn by **Hayashi Draws**.
+All sprites of **Lily** and **Hubble** were drawn by **HayashiDraws**.
 
-- **Artist:** Hayashi Draws
-- **Profile:** [Hayashi Draws on X](https://x.com/hayashidraws)
+- **Artist:** HayashiDraws
+- **Profile:** [HayashiDraws on X](https://x.com/hayashidraws)
 - **Artwork includes:**
   - Lily's player-character sprites
   - Hubble's walking sprites
@@ -293,9 +293,8 @@ The concepts and writing are mine, but the visual artwork is credited separately
 - **Used for:** Temporary enemy sprites
 - **Changes:** Selected sprites were resized, framed, animated, and connected to the custom battle system
 
-The pack allows commercial and noncommercial use with attribution and does not allow the asset pack itself to be resold. ([source: Mega Monster Pack](https://untiedgames.itch.io/mega-monster-pack))
 
-These sprites are only placeholders. The final artwork for Quasaur, Recursaur, Algorythm, and Optune is planned to be drawn by **Hayashi Draws**.
+These sprites are only placeholders. The final artwork for Quasaur, Recursaur, Algorythm, and Optune is planned to be drawn by **HayashiDraws**.
 
 ---
 
@@ -558,7 +557,7 @@ These are the direct source links used throughout the README:
 * [Pixel-Boy and AAA — Ninja Adventure Asset Pack](https://pixel-boy.itch.io/ninja-adventure-asset-pack)
 * [Kokoro Reflections — KR Mars Colony Tileset for RPGs](https://kokororeflections.itch.io/kr-mars-colony-tileset-for-rpgs)
 * [Kokoro Reflections — Game Assets and Tiles Usage Terms](https://kokororeflections.com/terms-use/)
-* [Hayashi Draws](https://x.com/hayashidraws)
+* [HayashiDraws](https://x.com/hayashidraws)
 * [unTied Games — Mega Monster Pack](https://untiedgames.itch.io/mega-monster-pack)
 * [CodeManu — Free VFX Asset Pack](https://codemanu.itch.io/vfx-free-pack)
 
