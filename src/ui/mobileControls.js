@@ -231,11 +231,8 @@ mobileControlsUI.joystick.addEventListener('lostpointercapture', stopJoystick)
 
 // register pointer events for the mobile interaction button
 mobileControlsUI.interactButton.addEventListener('pointerdown', pressInteract)
-
 mobileControlsUI.interactButton.addEventListener('pointerup', releaseInteract)
-
 mobileControlsUI.interactButton.addEventListener('pointercancel', cancelInteract)
-
 mobileControlsUI.interactButton.addEventListener('lostpointercapture', cancelInteract)
 
 mobileControlsUI.interactButton.addEventListener(
@@ -246,7 +243,6 @@ mobileControlsUI.interactButton.addEventListener(
 		event.stopPropagation()
 	}
 )
-
 
 // prevent a long press from opening the browser context menu.
 mobileControlsUI.container.addEventListener(
