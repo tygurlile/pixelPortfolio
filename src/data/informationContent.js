@@ -247,11 +247,10 @@ const informationContent = {
 						paragraphs: hqProject,
 
 						bullets: [
-							'Data Cleaning and Review: Prepared and checked program data before analysis, including reviewing missing values, inconsistencies, and activity records.',
-							'Temporal Analysis: Examined how field-worker activity changed over time and looked for differences in engagement and service patterns.',
-							'Program Analytics: Investigated patterns related to how eligible individuals were connected with government benefits and subsidies.',
-							'Operational Recommendations: Identified possible improvements to outreach, service delivery, and field-worker processes.',
-							'Research Communication: Summarized preliminary findings while clearly separating observed patterns from confirmed conclusions.'
+							'Cleaned and reviewed field-worker and program activity data, checking for missing values, inconsistent records, unusual entries, and reporting gaps that could affect the analysis.',
+							'Examined how field-worker activity changed over time and compared patterns in outreach, engagement, and service delivery to identify where participation or program activity differed.',
+							'Summarized the main patterns in the data and developed preliminary recommendations for improving outreach and field operations.',
+							'Clearly separated observed trends from conclusions that would require additional analysis.'
 						]
 					},
 

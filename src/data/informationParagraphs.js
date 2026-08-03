@@ -112,18 +112,12 @@ window.informationParagraphs = {
 	],
 
 	hqProject: [
-		`I worked with a faculty advisor to explore how Haqdarshak could help its 
-		field workers connect more eligible individuals with government benefit and 
-		subsidy programs. I cleaned and reviewed program data, examined field-worker 
-		activity over time, and looked for patterns that could help explain differences 
-		in outreach and service delivery.`,
+		`I analyzed Haqdarshak program data to explore how field-worker activity and outreach 
+		patterns affected access to government benefits and subsidy programs. I cleaning the 
+		data, examined changes over time, and identified possible improvements to service 
+		delivery and field operations.`,
 
-		`The project was exploratory rather than a completed implementation. I summarized 
-		the findings and identified possible improvements to outreach, operational 
-		processes, and how field workers support people through the benefits-access process.`,
-
-		`Tools and methods: Python, Pandas, data cleaning, exploratory data analysis, 
-		temporal analysis, program evaluation, operational analysis`
+		`Tools: Python, Pandas, exploratory data analysis, temporal analysis, programming analytics` 
 	],
 
 	icon: [
