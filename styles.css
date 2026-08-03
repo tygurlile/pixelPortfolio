@@ -635,7 +635,7 @@ canvas {
 }
 
 .information-eyebrow {
-	color: var(--ui-ink);
+	display: none;
 }
 
 .information-title {
