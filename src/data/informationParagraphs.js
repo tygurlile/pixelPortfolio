@@ -124,7 +124,7 @@ window.informationParagraphs = {
 
 		`Tools and methods: Python, Pandas, data cleaning, exploratory data analysis, 
 		temporal analysis, program evaluation, operational analysis`
-	]
+	],
 
 	icon: [
 		`This study used continuous measurements from NASA’s ICON mission to analyze how 
