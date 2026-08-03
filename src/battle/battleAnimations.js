@@ -1301,7 +1301,6 @@ async function playOptimize({
 			center: getSpriteCenter(attacker),
 			scale: 0.48,
 			duration: 720,
-			behindSprite: attacker
 		})
 
 	await wait(320)
@@ -1452,7 +1451,6 @@ async function playExploit({
 			center:getSpriteCenter(attacker),
 			scale: 0.4,
 			duration: 560,
-			behindSprite: attacker
 		})
 	await effect.finished
 }

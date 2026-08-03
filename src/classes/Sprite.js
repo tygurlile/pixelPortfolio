@@ -32,6 +32,9 @@ class Sprite {
 		this.opacity = 1
 		this.rotation = rotation
 
+		this.stretchX = 1
+		this.stretchY = 1
+
 		// calculate the size of one frame after the image finishes loading
 		this.image.onload = () => {
 			this.sourceWidth = this.image.width / this.frames.max
@@ -51,17 +54,13 @@ class Sprite {
 
 		context.save()
 
-		context.translate(
-			this.position.x + this.width / 2,
-			this.position.y + this.height / 2
-		)
+		const centerX = this.position.x + this.width / 2
+		const centerY = this.position.y + this.height / 2
 
+		context.translate(centerX, centerY)
 		context.rotate(this.rotation)
-
-		context.translate(
-			-this.position.x - this.width / 2,
-			-this.position.y - this.height / 2
-		)
+		context.scale(this.stretchX, this.stretchY)
+		context.translate(-centerX, -centerY)
 
 		context.globalAlpha = this.opacity
 

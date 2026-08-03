@@ -32,7 +32,7 @@ const monsters = {
 	quasaur: {
 		position: {
 			x: 720,
-			y: 30
+			y: 40
 		},
 		image: {
 			src: './characters/quasaur.png'
@@ -121,18 +121,18 @@ const monsters = {
 
 	optune: {
 		position: {
-			x: 805,
-			y: 98
+			x: 750,
+			y: 15
 		},
 		image: {
 			src: './characters/optune.png'
 		},
 		frames: {
-			max: 2,
-			hold: 24
+			max: 4,
+			hold: 60
 		},
-		scale: 3.2,
-		animate: true,
+		scale: 1.5,
+		animate: false,
 		isEnemy: true,
 		name: 'Optune',
 		level: 8,
