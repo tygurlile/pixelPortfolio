@@ -8,6 +8,9 @@ const {
 	outreach2,
 	outreach3,
 	workExperience,
+	astronomyDataProjects,
+	pm25Project,
+	yelpDatabaseProject,
 	icon,
 	ifa,
 	mkScholar,
@@ -212,20 +215,108 @@ const informationContent = {
 			}
 		],
 
+		introParagraphs: workExperience,
+
+		jumpLinks: [
+			{
+				label: 'Applied Data Science Projects',
+				targetId: 'data-projects'
+			},
+			{
+				label: 'Research',
+				targetId: 'research-experience'
+			},
+			{
+				label: 'Teaching & Mentoring',
+				targetId: 'teaching-mentoring'
+			}
+		],
+
 		groups: [
 			{
+				id: 'data-projects',
+				title: 'Applied Data Science Projects',
+				className: 'projects',
+
+				sections: [
+
+					{
+						heading: 'Database Systems and Query Performance Analysis',
+						role: 'PostgreSQL and MongoDB Benchmarking Project',
+						date: '2024',
+						paragraphs: yelpDatabaseProject,
+
+						bullets: [
+							'Data Preparation: Cleaned and transformed semi-structured business and review data for use in both relational and document database systems.',
+							'Database Design: Created PostgreSQL tables and MongoDB collections that supported comparable analytical tasks across both platforms.',
+							'Query Development: Wrote SQL queries and MongoDB aggregation pipelines for filtering, joining, grouping, text search, and nested data analysis.',
+							'Performance Benchmarking: Compared query runtimes, execution plans, documents or rows examined, and the effects of different indexing strategies.',
+							'Technical Communication: Summarized the strengths, limitations, and appropriate use cases of relational and document-oriented databases.'
+						],
+
+						links: [
+							{
+								label: 'View GitHub Repository',
+								url: 'https://github.com/tygurlile/YelpDatabaseSystemsAnalysis'
+							}
+						]
+					},
+					{
+						heading: 'Environmental Data Modeling and Health Analytics',
+						role: 'Applied Data Science Project',
+						date: '2024',
+						paragraphs: pm25Project,
+
+						bullets: [
+							'Data Integration and Cleaning: Prepared and joined CDC, NOAA, and air-quality data with different formats, geographic units, and time periods.',
+							'Exploratory Data Analysis: Examined trends, seasonal patterns, geographic differences, correlations, missing values, and potential data-quality issues.',
+							'Feature Engineering: Created time-based, weather, and location-related variables for use in statistical analysis and predictive modeling.',
+							'Predictive Modeling: Built models to estimate PM2.5 levels and evaluated how weather and environmental variables affected prediction performance.',
+							'Model Evaluation: Compared results using appropriate performance metrics and investigated where model predictions were less reliable.',
+							'Communication: Presented findings through visualizations and a written report while distinguishing statistical relationships from causal conclusions.'
+						],
+
+						links: [
+							{
+								label: 'View GitHub Repository',
+								url: 'https://github.com/tygurlile/pm25HealthImpactModeling'
+							}
+						]
+					},
+					{
+						heading: 'Scientific Data Analysis Projects',
+						role: 'Advanced Scientific Computing Coursework',
+						date: '2024',
+						paragraphs: astronomyDataProjects,
+
+						bullets: [
+							'Used SQL-like database queries and public data APIs to retrieve, filter, join, and analyze large observational datasets from multiple sources.',
+							'Bayesian Statistical Modeling: Built probabilistic models to estimate unobserved quantities, quantify uncertainty, compare model assumptions, and interpret posterior results.',
+							'High-Dimensional Predictive Modeling: Processed complex numerical data, engineered model inputs, and applied regression methods to predict physical properties from thousands of measured features.',
+							'Image Classification: Built and evaluated machine-learning models for multiclass image classification, comparing performance metrics and investigating common prediction errors.'
+						],
+
+						links: [
+							{
+								label: 'View GitHub Repository',
+								url: 'https://github.com/tygurlile/AstronomyDataScienceProjects'
+							}
+						]
+					}
+				]
+			},
+
+			{
+				id: 'research-experience',
 				title: 'Research Experience',
 				className: 'research',
 
 				sections: [
 					{
-						paragraphs: workExperience
-					},
-
-					{
 						heading: 'Space Sciences Laboratory - UC Berkeley',
 						subheading: 'Daytime Thermospheric Wind Transients and Circulation in May 2021',
-
+						role: 'Undergraduate Researcher',
+						date: 'Aug 2021–May 2025',
 						paragraphs: icon,
 
 						links: [
@@ -239,7 +330,8 @@ const informationContent = {
 					{
 						heading: "Institute for Astronomy - University of Hawai'i at Manoa",
 						subheading: 'Machine Learning for Astronomical Anomaly Detection',
-
+						role: 'Research Intern',
+						date: 'Jun–Aug 2024',
 						paragraphs: ifa,
 
 						links: [
@@ -253,44 +345,37 @@ const informationContent = {
 			},
 
 			{
-				title: 'Teaching and Mentorship',
+				id: 'teaching-mentoring',
+				title: 'Teaching and Mentoring',
 				className: 'teaching',
 
 				sections: [
 					{
+						heading: 'USC DSO Research Experiences for Undergraduates',
+						role: 'Graduate Student Instructor and Mentor',
+						date: 'Jun 2026–Aug 2026',
+						paragraphs: aiResearch
+					},
+
+					{
+						heading: 'Introduction to General Astronomy - UC Berkeley',
+						role: 'Reader and Grader',
+						date: 'Aug 2022–Dec 2024',
+						paragraphs: reading
+					},
+
+					{
 						heading: 'Mauna Kea Scholars Program',
-						subheading: 'Research Mentor',
+						role: 'Research Mentor',
+						date: 'Jun–Aug 2024',
 						paragraphs: mkScholar
 					},
 
 					{
 						heading: 'Python Programming in Astronomy - UC Berkeley',
-						subheading: 'Teaching Assistant and Grader',
+						role: 'Reader, Grader, and Teaching Assistant',
+						date: 'Jun–Aug 2023',
 						paragraphs: pythonProgramming
-					},
-
-					{
-						heading: 'Introduction to General Astronomy - UC Berkeley',
-						subheading: 'Teaching Assistant and Grader',
-						paragraphs: reading
-					},
-
-					{
-						heading: 'USC DSO Research Experience for Undergraduates',
-						subheading: 'General Mentor',
-						paragraphs: aiResearch
-					}
-				]
-			},
-
-			{
-				title: 'Personal Projects',
-				className: 'projects',
-
-				sections: [
-					{
-						heading: 'Interactive Pokémon-Style Portfolio Website',
-						paragraphs: website
 					}
 				]
 			}
@@ -323,7 +408,8 @@ const informationContent = {
 				sections: [
 					{
 						heading: 'Royal Astronomical Society of Hawaii',
-						subheading: 'Volunteer Outreach Coordinator',
+						role: 'Volunteer Outreach Coordinator',
+						date: 'Jun–Aug 2024',
 
 						paragraphs: outreach1,
 
@@ -336,7 +422,8 @@ const informationContent = {
 
 					{
 						heading: 'Middle School Science Fair Mentor',
-						subheading: 'Volunteer Science Fair Coach',
+						role: 'Volunteer Science Fair Coach',
+						date: '2023',
 
 						paragraphs: outreach2,
 
@@ -350,7 +437,8 @@ const informationContent = {
 
 					{
 						heading: 'NASA Astrobiology Outreach - UC Riverside',
-						subheading: 'Project Leader',
+						role: 'Project Leader',
+						date: 'Aug 2017–Jan 2020',
 
 						paragraphs: outreach3,
 

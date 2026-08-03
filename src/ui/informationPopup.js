@@ -450,6 +450,27 @@ function createInformationSection(sectionDefinition) {
 		section.append(subheading)
 	}
 
+	if (sectionDefinition.role || sectionDefinition.date) {
+		const meta = document.createElement('div')
+		meta.className = 'information-section-meta'
+
+		if (sectionDefinition.role) {
+			const role = document.createElement('span')
+			role.className = 'information-section-role'
+			role.textContent = sectionDefinition.role
+			meta.append(role)
+		}
+
+		if (sectionDefinition.date) {
+			const date = document.createElement('span')
+			date.className = 'information-section-date'
+			date.textContent = sectionDefinition.date
+			meta.append(date)
+		}
+
+		section.append(meta)
+	}
+
 	appendParagraphs(section, sectionDefinition.paragraphs)
 	appendBullets(section, sectionDefinition.bullets)
 
@@ -469,6 +490,11 @@ function createInformationGroup(groupDefinition) {
 	const groupClassName = groupDefinition.className || 'default'
 
 	group.className = `information-group information-group--${groupClassName}`
+
+	if (groupDefinition.id) {
+		group.id = groupDefinition.id
+		group.tabIndex = -1
+	}
 
 	if (groupDefinition.title) {
 		const title = document.createElement('h2')
@@ -504,6 +530,65 @@ function renderTopLinks(topLinks = []) {
 	informationElements.body.append(topLinksContainer)
 }
 
+function renderIntroParagraphs(paragraphs = []) {
+	if (paragraphs.length === 0) {return}
+
+	const intro = document.createElement('div')
+	intro.className = 'information-intro'
+
+	appendParagraphs(intro, paragraphs)
+	informationElements.body.append(intro)
+}
+
+function getElementTopInsidePanel(element, panel) {
+	let top = 0
+	let currentElement = element
+
+	while (
+		currentElement && currentElement !== panel
+	) {
+		top += currentElement.offsetTop
+		currentElement = currentElement.offsetParent
+	}
+	return top
+}
+
+function renderJumpLinks(jumpLinks = []) {
+	if (jumpLinks.length === 0) {return}
+
+	const navigation = document.createElement('nav')
+
+	navigation.className = 'information-jump-links'
+	navigation.setAttribute('aria-label', 'Jump to experience section')
+
+	jumpLinks.forEach((jumpDefinition) => {
+		const button = document.createElement('button')
+
+		button.className = 'information-jump-button'
+		button.type = 'button'
+		button.textContent = jumpDefinition.label
+
+		button.addEventListener('click', () => {
+			const target = document.getElementById(jumpDefinition.targetId)
+
+			if (!target) {return}
+
+			const panel = informationElements.panel
+			const targetTop = getElementTopInsidePanel(target, panel)
+
+			// leave some space between section heading and top of popup
+			const topSpacing = 12
+
+			panel.scrollTo({
+				top: Math.max(0, targetTop - topSpacing),
+				behavior: 'smooth'
+			})
+		})
+		navigation.append(button)
+	})
+	informationElements.body.append(navigation)
+}
+
 function renderGroups(groups = []) {
 	groups.forEach((groupDefinition) => {
 		informationElements.body.append(
@@ -511,6 +596,17 @@ function renderGroups(groups = []) {
 		)
 	})
 }
+
+// function renderJumpScrollSpacer(jumpLinks = []) {
+// 	if (jumpLinks.length === 0) {return}
+
+// 	const spacer = document.createElement('div')
+
+// 	spacer.className = 'information-jump-scroll-spacer'
+// 	spacer.setAttribute('aria-hidden', 'true')
+
+// 	informationElements.body.append(spacer)
+// }
 
 function renderBottomLinks(links = []) {
 	informationElements.links.replaceChildren()
@@ -546,7 +642,11 @@ function openInformationPopup(contentId) {
 
 	informationElements.body.replaceChildren()
 
+	const jumpLinks = contentDefinition.jumpLinks || []
+
 	renderTopLinks(contentDefinition.topLinks || [])
+	renderIntroParagraphs(contentDefinition.introParagraphs || [])
+	renderJumpLinks(jumpLinks)
 	renderGroups(contentDefinition.groups || [])
 	renderBottomLinks(contentDefinition.links || [])
 
