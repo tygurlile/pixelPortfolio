@@ -11,6 +11,7 @@ const {
 	astronomyDataProjects,
 	pm25Project,
 	yelpDatabaseProject,
+	hqProject,
 	icon,
 	ifa,
 	mkScholar,
@@ -239,6 +240,20 @@ const informationContent = {
 				className: 'projects',
 
 				sections: [
+					{
+						heading: 'Program Analytics and Social Protection Access',
+						role: 'USC Graduate Research and Consulting Project',
+						date: '2025',
+						paragraphs: hqProject,
+
+						bullets: [
+							'Data Cleaning and Review: Prepared and checked program data before analysis, including reviewing missing values, inconsistencies, and activity records.',
+							'Temporal Analysis: Examined how field-worker activity changed over time and looked for differences in engagement and service patterns.',
+							'Program Analytics: Investigated patterns related to how eligible individuals were connected with government benefits and subsidies.',
+							'Operational Recommendations: Identified possible improvements to outreach, service delivery, and field-worker processes.',
+							'Research Communication: Summarized preliminary findings while clearly separating observed patterns from confirmed conclusions.'
+						]
+					},
 
 					{
 						heading: 'Database Systems and Query Performance Analysis',

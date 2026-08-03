@@ -111,6 +111,21 @@ window.informationParagraphs = {
 		`Tools: SQL, PostgreSQL, MongoDB, Python, Pandas, database design, indexing, query optimization`
 	],
 
+	hqProject: [
+		`I worked with a faculty advisor to explore how Haqdarshak could help its 
+		field workers connect more eligible individuals with government benefit and 
+		subsidy programs. I cleaned and reviewed program data, examined field-worker 
+		activity over time, and looked for patterns that could help explain differences 
+		in outreach and service delivery.`,
+
+		`The project was exploratory rather than a completed implementation. I summarized 
+		the findings and identified possible improvements to outreach, operational 
+		processes, and how field workers support people through the benefits-access process.`,
+
+		`Tools and methods: Python, Pandas, data cleaning, exploratory data analysis, 
+		temporal analysis, program evaluation, operational analysis`
+	]
+
 	icon: [
 		`This study used continuous measurements from NASA’s ICON mission to analyze how 
 		geomagnetic storms changed wind patterns across multiple layers of Earth’s upper 
