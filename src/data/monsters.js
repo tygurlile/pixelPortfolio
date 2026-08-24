@@ -151,10 +151,10 @@ const monsters = {
 }
 
 const randomEnemyPool = [
-	//monsters.quasaur,
-	monsters.recursaur
-	//monsters.algorythm,
-	//monsters.optune
+	monsters.quasaur,
+	monsters.recursaur,
+	monsters.algorythm,
+	monsters.optune
 ]
 
 let isFirstEnemyEncounter = true
