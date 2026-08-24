@@ -280,21 +280,10 @@ I created the names, themes, writing, and general concepts for:
 
 Their attacks and battle behavior are based on ideas from astronomy, recursion, algorithms, optimization, and decision science.
 
-The concepts and writing are mine, but the visual artwork is credited separately depending on the current sprite source.
+The concepts and writing are mine, but the visual artwork is by **HayashiDraws**.
 
----
-
-## Temporary Enemy Sprites
-
-### Mega Monster Pack
-
-- **Creator:** unTied Games
-- **Source:** [Mega Monster Pack](https://untiedgames.itch.io/mega-monster-pack)
-- **Used for:** Temporary enemy sprites
-- **Changes:** Selected sprites were resized, framed, animated, and connected to the custom battle system
-
-
-These sprites are only placeholders. The final artwork for Quasaur, Recursaur, Algorythm, and Optune is planned to be drawn by **HayashiDraws**.
+- **Artist:** HayashiDraws
+- **Profile:** [HayashiDraws on X](https://x.com/hayashidraws)
 
 ---
 
