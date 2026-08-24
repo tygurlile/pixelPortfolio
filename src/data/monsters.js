@@ -61,17 +61,17 @@ const monsters = {
 
 	recursaur: {
 		position: {
-			x: 785,
-			y: 90
+			x: 740,
+			y: 25
 		},
 		image: {
 			src: './characters/recursaur.png'
 		},
 		frames: {
-			max: 3,
-			hold: 24
+			max: 4,
+			hold: 10
 		},
-		scale: 2.25,
+		scale: 1.5,
 		animate: true,
 		isEnemy: true,
 		name: 'Recursaur',
@@ -151,10 +151,10 @@ const monsters = {
 }
 
 const randomEnemyPool = [
-	monsters.quasaur,
-	monsters.recursaur,
-	monsters.algorythm,
-	monsters.optune
+	//monsters.quasaur,
+	monsters.recursaur
+	//monsters.algorythm,
+	//monsters.optune
 ]
 
 let isFirstEnemyEncounter = true

@@ -31,6 +31,7 @@ class Sprite {
 		this.sprites = sprites
 		this.opacity = 1
 		this.rotation = rotation
+		this.filter = 'none'
 
 		this.stretchX = 1
 		this.stretchY = 1
@@ -63,6 +64,7 @@ class Sprite {
 		context.translate(-centerX, -centerY)
 
 		context.globalAlpha = this.opacity
+		context.filter = this.filter
 
 		// only draw the current frame from the sprite sheet
 		context.drawImage(

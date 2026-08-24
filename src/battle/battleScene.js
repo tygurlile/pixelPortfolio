@@ -16,51 +16,86 @@ let battleEndHandler = () => {}
 
 let enemyIdleTween = null
 
-// idle animation for optune
+// idle animations for optune and recursaur
 function startEnemyIdleAnimation(enemy) {
 	if (enemyIdleTween) {
 		enemyIdleTween.kill()
 		enemyIdleTween = null
 	}
 
-	if (enemy.name !== 'Optune') return
+	if (
+		enemy.name !== 'Optune' && enemy.name !== 'Recursaur'
+	) return
 
 	const startingY = enemy.position.y
+	const startingRotation = enemy.rotation
 
 	enemy.idleStartingY = startingY
+	enemy.idleStartingRotation = startingRotation
 	enemy.stretchX = 1
 	enemy.stretchY = 1
 	enemy.frames.val = 0
 
-	const motion = {
-		phase: 0
+	// -----------------------------------------------------
+	// OPTUNE
+	// -----------------------------------------------------
+
+	if (enemy.name === 'Optune') {
+		const motion = {phase: 0}
+
+		enemyIdleTween = gsap.to(motion, {
+			phase: 1,
+			duration: 2.7,
+			ease: 'none',
+			repeat: -1,
+
+			onUpdate: () => {
+				const phase = motion.phase
+				const lift = (1 - Math.cos(phase * Math.PI * 2)) / 2
+
+				enemy.position.y = startingY - 7 * lift
+				enemy.stretchX = 1 - 0.12 * lift
+				enemy.stretchY = 1 + 0.08 * lift
+
+				if (
+					phase >= 0.08 && phase < 0.58
+				) {
+					enemy.frames.val = 0
+				} else {
+					enemy.frames.val = 1
+				}
+			}
+		})
+
+		return
 	}
+
+	// -----------------------------------------------------
+	// RECURSAUR
+	// -----------------------------------------------------
+	enemy.animate = false
+
+	const motion = {phase: 0}
 
 	enemyIdleTween = gsap.to(motion, {
 		phase: 1,
-		duration: 2.7,
+		duration: 1.6,
 		ease: 'none',
 		repeat: -1,
 
 		onUpdate: () => {
 			const phase = motion.phase
+			const coil = Math.sin(phase * Math.PI * 2)
 
-			// moves smoothly from: bottom -> top -> bottom
-			const lift = (1 - Math.cos(phase * Math.PI * 2)) / 2
-			enemy.position.y = startingY - 7 * lift
-			enemy.stretchX = 1 - 0.12 * lift
-			enemy.stretchY = 1 + 0.08 * lift
+			enemy.stretchX = 1 - 0.025 * coil
+			enemy.stretchY = 1 + 0.025 * coil
+			enemy.rotation = startingRotation + 0.012 * coil
 
-			// match each frame to one part of the floating motion.
-			if (phase >= 0.08 && phase < 0.58) {
-				enemy.frames.val = 0
-			} else {
-				enemy.frames.val = 1
-			}
+			// synchronize all 4 sprite frames exactly with coiling movement
+			enemy.frames.val = Math.floor(phase * 4) % 4
 		}
 	})
 }
-
 
 function initializeBattle({
 	enemyData = chooseRandomEnemy(),
@@ -136,11 +171,18 @@ function resetBattle() {
 	if (battle.enemy) {
 		battle.enemy.stretchX = 1
 		battle.enemy.stretchY = 1
+		battle.enemy.frames.val = 0
 
 		if (
 			Number.isFinite(battle.enemy.idleStartingY)
 		) {
 			battle.enemy.position.y = battle.enemy.idleStartingY
+		}
+
+		if (
+			Number.isFinite(battle.enemy.idleStartingRotation)
+		) {
+			battle.enemy.rotation = battle.enemy.idleStartingRotation
 		}
 	}
 
@@ -351,9 +393,16 @@ async function handleFaint(monster, result) {
 
 		monster.stretchX = 1
 		monster.stretchY = 1
+		monster.frames.val = 0
 
 		if (Number.isFinite(monster.idleStartingY)) {
 			monster.position.y = monster.idleStartingY
+		}
+
+		if (
+			Number.isFinite(monster.idleStartingRotation)
+		) {
+			monster.rotation = monster.idleStartingRotation
 		}
 	}
 

@@ -1189,6 +1189,8 @@ async function playBaseCase({
 }) {
 	playSound(audio.baseCaseSound)
 
+	attacker.filter = 'hue-rotate(100deg) saturate(1.35) brightness(1.1)'
+
 	const effect =
 		await startGridEffect({
 			src: './attacks/baseCase.png',
@@ -1200,7 +1202,9 @@ async function playBaseCase({
 
 	await wait(350)
 	onHeal()
+
 	await effect.finished
+	attacker.filter = 'none'
 }
 
 
