@@ -23,7 +23,7 @@ window.informationParagraphs = {
 	],
 
 	education: [
-		`I am currently gettinga Master's of Science in Business Research at the USC
+		`I am currently getting a Master's of Science in Business Research at the USC
 		Marshall School of Business. Previously, I earned degrees in Data Science
 		and Astrophysics from UC Berkeley, where I studied from August 2021
 		through May 2025.`,
