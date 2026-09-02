@@ -204,7 +204,7 @@ const informationContent = {
 		topLinks: [
 			{
 				label: 'Resume',
-				url: './src/data/Resume.pdf'
+				url: './Resume.pdf'
 			},
 			{
 				label: 'GitHub',
@@ -271,7 +271,7 @@ const informationContent = {
 						links: [
 							{
 								label: 'View GitHub Repository',
-								url: 'https://github.com/tygurlile/YelpDatabaseSystemsAnalysis'
+								url: 'https://github.com/tygurlile/yelp-database-systems-analysis'
 							}
 						]
 					},
@@ -293,7 +293,7 @@ const informationContent = {
 						links: [
 							{
 								label: 'View GitHub Repository',
-								url: 'https://github.com/tygurlile/pm25HealthImpactModeling'
+								url: 'https://github.com/tygurlile/particulate-matter-health-impact-modeling'
 							}
 						]
 					},
@@ -313,7 +313,7 @@ const informationContent = {
 						links: [
 							{
 								label: 'View GitHub Repository',
-								url: 'https://github.com/tygurlile/AstronomyDataScienceProjects'
+								url: 'https://github.com/tygurlile/scientific-data-analysis-projects'
 							}
 						]
 					}
@@ -512,11 +512,11 @@ const informationContent = {
 		links: [
 			{
 				label: 'View the Source Code',
-				url: 'https://github.com/tygurlile/pixelPortfolio'
+				url: 'https://github.com/tygurlile/pixel-portfolio'
 			},
 			{
 				label: 'Read the Full README and Credits',
-				url: 'https://github.com/tygurlile/pixelPortfolio#readme'
+				url: 'https://github.com/tygurlile/pixel-portfolio#readme'
 			}
 		]
 	}
